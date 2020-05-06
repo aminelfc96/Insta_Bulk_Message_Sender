@@ -2,10 +2,11 @@ import getpass
 from selenium import webdriver
 from time import sleep,time
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 from random import randrange
 import os
 import texts;from texts import messagesx
-#create a file texts.py and put a list named messagesx like messagesx = ["Hey","Hello",...""]
+
 def CLEAR():
  if os.name == "nt": 
    os.system('color b')
@@ -15,27 +16,27 @@ def CLEAR():
    os.system('clear')
 CLEAR()
 def Interface():
-    global fbuser,fbpass,userlink,url1,num,userchoice,x
+    global fbuser,fbpass,userlink,url1,num,userchoice,x,text 
     x = len(messagesx)
     print("")
     print("By moamine_lfc96")
     print("")
     fbuser = input("Enter Your Instagram Username : ")
     while len(fbuser) == 0:
-      fbuser = '' #put your default
+      fbuser = 'moamine_lfc96' #default
     print("")
     fbpass = getpass.getpass('Enter Your Instagram Passowrd : ', stream = None)
     print("")
     userlink = input("Enter The person username : ")
     while len(userlink) == 0:
-      userlink = '' #person default username
+      userlink = 'nvm_iwtc'
     url1 = ('https://www.instagram.com/' + userlink)
     print("")
     num = input("How many times you want to send : ")
     while len(num) == 0:
       num = '5'
     print("")
-    userchoice = input("Enter your message (M) or send from dict (D) : ")
+    userchoice = input("Enter your message (M) or send from dict (D) / MD For Mixed : ")
     if userchoice.lower() == 'm':
       print("")
       text = input("Your Message : ")
@@ -44,6 +45,11 @@ def Interface():
     elif userchoice.lower() == 'd' :
       print("")
       print("Sending From Dictioanry to : " + userlink,str(num) + " times")
+    elif userchoice.lower() == 'md':
+      print("")
+      text = input("Your Message : ")
+      print("Sending Mixed Messages to : " + userlink,str(num) + " times")
+      
 CLEAR()
 Interface()
 class InstagramText():
@@ -63,8 +69,12 @@ class InstagramText():
         login_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div/form/div[4]/button')
         login_btn.click()
         sleep(5)
-        close_pop_up = self.driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]')
-        close_pop_up.click()
+        try:
+         close_pop_up = self.driver.find_element_by_xpath('/html/body/div[4]/div/div/div[3]/button[2]')
+         close_pop_up.click()
+        except NoSuchElementException as exception:
+         print("Error during closing pop-up")
+
         sleep(1)
         print("")
         print("Logged In Successfully")
@@ -85,13 +95,22 @@ class InstagramText():
 
             message.send_keys(Keys.ENTER)
             message.send_keys(messagesx[z])
-            print("-----------------")          
+            print("-----------------------------------")          
             print("0"+w+"# Sending " + messagesx[z])
           elif userchoice.lower() == 'm':
+
             print("-----------------------------------")
             print("0"+w+"# Sending " + text)
             message.send_keys(text)
             message.send_keys(Keys.ENTER) 
+          elif userchoice.lower() == 'md':
+            print("-----------------------------------")
+            print("0"+w+"# Sending " + messagesx[z],text)
+            message.send_keys(Keys.ENTER)
+            message.send_keys(messagesx[z],text)
+
+
+
         if True:
             #self.driver.close()
             #os.system('cls')

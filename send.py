@@ -29,7 +29,7 @@ def Interface():
     print("")
     userlink = input("Enter The person username : ")
     while len(userlink) == 0:
-      userlink = 'nvm_iwtc'
+      userlink = '' #if you want to set a default
     url1 = ('https://www.instagram.com/' + userlink)
     print("")
     num = input("How many times you want to send : ")

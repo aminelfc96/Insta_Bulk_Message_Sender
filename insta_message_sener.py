@@ -18,9 +18,7 @@ CLEAR()
 def Interface():
     global fbuser,fbpass,userlink,url1,num,userchoice,x,text 
     x = len(messagesx)
-    print("")
-    print("By moamine_lfc96")
-    print("")
+    print("\nBy moamine_lfc96\n")
     fbuser = input("Enter Your Instagram Username : ")
     while len(fbuser) == 0:
       fbuser = 'moamine_lfc96' #default
